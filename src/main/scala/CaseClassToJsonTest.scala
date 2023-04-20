@@ -1,13 +1,12 @@
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
-import play.api.libs.json.{JsPath, Reads}
+import play.api.libs.json.{Reads, __}
 
 case class Person(name: String, id: Int, address: String)
 
 object JsonToScalaConverterTest {
   implicit val reads: Reads[Person] = (
-    (JsPath \ "name").read[String] and
-      (JsPath \ "id").read[Int] and
-      (JsPath \ "address").read[String]
-    )(Person.apply _)
+    (__ \ "name").read[String] and
+      (__ \ "id").read[Int] and
+      (__ \ "address").read[String]
+    )(Person)
 }
-
