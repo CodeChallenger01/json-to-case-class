@@ -1,18 +1,20 @@
+import com.knoldus.{Check, NumberTooLong, StringContainSpecialCharacter, StringTooLong}
+
 import scala.io.StdIn.readLine
 
 trait Validator[A] {
-  def validate(input: A): Either[Throwable, String]
+  def validate(input: A): Either[String, String]
 }
 
 case class StringValidation(userInput: String, maxLength: Int)
 
 object StringValidation {
   implicit val string = new Validator[StringValidation] {
-    override def validate(input: StringValidation): Either[Throwable, String] = {
+    override def validate(input: StringValidation): Either[String, String] = {
       val content = input.userInput
       content match {
-        case value if value.isEmpty || content.length > input.maxLength => Left(new RuntimeException("Either String is Empty or Length Exceeds"))
-        case value if value.contains("@") || value.contains("$") || value.contains("#") => Left(new Exception("Containing Special Character"))
+        case value if value.isEmpty || content.length > input.maxLength => Left(Check.check(StringTooLong("String is Too Long")))
+        case value if value.contains("@") || value.contains("$") || value.contains("#") => Left(Check.check(StringContainSpecialCharacter("String Containing Special Character")))
         case value => Right(s"Valid String : $value")
       }
     }
@@ -23,10 +25,10 @@ case class NumberValidation(userInput: Int, minRange: Int, maxRange: Int)
 
 object NumberValidation {
   implicit val number = new Validator[NumberValidation] {
-    override def validate(input: NumberValidation): Either[Throwable, String] = {
+    override def validate(input: NumberValidation): Either[String, String] = {
       val content = input.userInput
       content match {
-        case value if value.isNaN || content < input.minRange || content > input.maxRange => Left(new RuntimeException("Numeric value is not within range"))
+        case value if value.isNaN || content < input.minRange || content > input.maxRange => Left(Check.check(NumberTooLong(" Number is out of Range ")))
         case value => Right(s"Valid Number: $value")
       }
     }
