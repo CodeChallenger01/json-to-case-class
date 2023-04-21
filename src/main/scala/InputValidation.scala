@@ -25,7 +25,6 @@ object NumberValidation {
   implicit val number = new Validator[NumberValidation] {
     override def validate(input: NumberValidation): Either[Throwable, String] = {
       val content = input.userInput
-
       content match {
         case value if value.isNaN || content < input.minRange || content > input.maxRange => Left(new RuntimeException("Numeric value is not within range"))
         case value => Right(s"Valid Number: $value")
