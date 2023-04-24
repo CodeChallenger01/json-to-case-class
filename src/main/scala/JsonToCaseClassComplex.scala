@@ -1,5 +1,5 @@
 import play.api.libs.json.{JsError, JsResult, JsSuccess, JsValue, Json, Reads}
-
+case class Employee(name: String, middleName: Option[String], id: Int, phoneNumber: List[Long], address: String, achievements: Awards)
 object JsonToCaseClassComplex extends App {
   implicit val award: Reads[Awards] = Json.reads[Awards]
   implicit val employee: Reads[Employee] = Json.reads[Employee]
