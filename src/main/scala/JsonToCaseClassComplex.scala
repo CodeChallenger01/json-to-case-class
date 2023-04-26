@@ -1,5 +1,5 @@
 import com.knoldus.{CEO, Role}
-import play.api.libs.json.{JsError, JsResult, JsSuccess, JsValue, Json, Reads}
+import play.api.libs.json._
 
 case class Employee(name: String, middleName: Option[String], id: Int, phoneNumber: List[Long], address: String, achievements: Awards, role: Role)
 
@@ -15,7 +15,7 @@ object JsonToCaseClassComplex extends App {
       |"phoneNumber" : [9897878987,8767676567],
       |"address" : "Noida",
       |"achievements" :{"awardOne":" Give Little Unexpected Extra","awardTwo":" Go 1%"},
-      |"role":{"_type":"com.knoldus.CEO","role":"Head"}
+      |"role":"Role"
       |}""".stripMargin
   }
   private val jsonToCaseClass: JsResult[Employee] = Json.fromJson[Employee](employeeDetail)
