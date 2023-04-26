@@ -18,7 +18,7 @@ object CaseClassToJsonComplex extends App {
 
   implicit val ceo: OWrites[CEO] = Json.writes[CEO]
   private val awards = Awards("Give Little Unexpected Extra", "Go 1%")
-  private val employee = People("Manish Mishra", None, 1849, List(9897878987L, 8767676567L), "Noida", awards, CEO("Head"))
+  private val employee = People("Manish Mishra", None, 1849, List(9897878987L, 8767676567L), "Noida", awards, CEO("ceo"))
   private val parseToJson = Json.toJson(employee)
   println(parseToJson)
 }
